@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+    <script src="/jquery-3.6.0.min.js"></script>
+    <script src="/semantic.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/semantic.min.css">
+    <style>
+        a {
+            color: #000;
+        }
+        body {
+            background: #FFCB05;
+        }
+        #addPokemon {
+            background: #3D7DCA;
+            color: white;
+        }
+        #addType,
+        #addLocation {
+            background: rgba(255, 255, 255, 0.5);
+            border: 0;
+            color: #000;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .list-container,
+        .form {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        .buttons {
+            position: relative;
+        }
+        .ui.floated.right {
+            position: absolute;
+            right: 0.2em;
+        }
+        .ui.circular.image {
+            padding-right: 2.2rem !important;
+        }
+        .ui.list {
+            padding-left: 1rem;
+        }
+        .footer > img {
+            width: 10rem !important;
+        }
+        .footer {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="ui center aligned icon header">
+            <img src="/images/monsterball.png" alt="header_image">
+            <div class="content">
+                포켓몬스터 도감
+                <div class="sub header">획득한 포켓몬스터를 등록하여 자신만의 몬스터 도감을 완성해 보세요!</div>
+            </div>
+        </h2>
+
+        <form class="ui form" action="/create/new" method="POST">
+            <div class="three fields">
+            <div class="field">
+                <label>이름</label>
+                <input name="pokemon_name" type="text" placeholder="포켓몬스터 이름을 지어 주세요">
+            </div>
+            <div class="field">
+                <label>타입</label>
+                <select class="ui dropdown" name="pokemon_type">
+                    <option value="">포켓몬스터 타입 선택</option>
+                    <% department.forEach(function(item){ %>   
+                        <option value="<%=item.type_idx%>"><%=item.type_name%></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="field">
+                <label>지역</label>
+                <select class="ui dropdown" name="pokemon_location">
+                    <option value="">발견한 지역 선택</option>
+                    <% position.forEach(function(item){ %>   
+                        <option value="<%=item.location_idx%>"><%=item.location_name%></option>
+                    <% }) %>
+                </select>
+            </div>
+            </div>
+            <!-- 비고란 추가 -->
+            <div class="field">
+                <label>특이사항</label>
+                <input type="text" name="pokemon_memo" placeholder="특이시항을 입력해 주세요">
+            </div>
+            <div class="buttons">
+                <button type="submit" class="ui button animated" id="addPokemon">
+                    <div class="visible content">SUBMIT</div>
+                    <div class="hidden content">
+                        <i class="right arrow icon"></i>
+                    </div>
+                </button>
+                <div class="ui floated right buttons">
+                    <a href="/department/edit/form/" class="ui button" id="addType">타입 추가</a>
+                    <div class="or"></div>
+                    <a href="/position/edit/form/" class="ui button" id="addLocation">지역 추가</a>
+                </div>
+            </div>
+        </form>
+        
+
+        <div class="list-container">
+            <div class="ui list animated relaxed">
+                <% list.forEach(function(data) { %>
+                <div class="item" style="color : <%=data.type_color%>">
+                    <i class="large github middle aligned icon"></i>
+                    <div class="content">
+                        <a href="/detail/<%=data.pokemon_idx%>" class="header"><%=data.pokemon_name%></a>
+                        <div class="description"><a><b><%=data.location_name%></b></a>에서 발견된 <a><b><%=data.type_name%>타입</b></a>의 포켓몬스터입니다.</div>
+                    </div>    
+                </div>
+                <% }); %>
+            </div>
+        </div>
+
+        <h2 class="ui center aligned header footer">
+            <img src="/images/monsters.png" alt="footer_image">
+        </h2>
+
+    </div>
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+
+</body>
+</html>

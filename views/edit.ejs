@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수정페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <!-- jQuery, semantic ui js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <style>
+        body {
+            padding: 2rem;
+        }
+        .list-container,
+        .form {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body style="background-color : <%=data.type_color%>">
+    <input type="hidden" name="selected_department" value="<%=data.type_idx%>">
+    <input type="hidden" name="selected_position" value="<%=data.location_idx%>">
+    <h2 class="ui header">
+        <i class="github icon"></i>
+        <div class="content">
+          <%=data.pokemon_name%> 수정하기
+        </div>
+      </h2>
+    <form class="ui form" action="/detail/update/<%=data.pokemon_idx%>" method="POST" data-number='<%=data.pokemon_idx%>'>
+        <div class="three fields">
+            <div class="field">
+                <label>이름</label>
+                <input name="pokemon_name" type="text" placeholder="이름" value="<%=data.pokemon_name%>">
+            </div>
+            <div class="field">
+                <label>타입</label>
+                <select class="ui dropdown" name="pokemon_type">
+                    <option value=""></option>
+                    <% department.forEach(function(item){ %>   
+                        <option value="<%=item.type_idx%>"><%=item.type_name%></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="field">
+                <label>지역</label>
+                <select class="ui dropdown" name="pokemon_location">
+                    <option value="">지역 선택</option>
+                    <% position.forEach(function(item){ %>
+                        <option value="<%=item.location_idx%>"><%=item.location_name%></option>
+                    <% }) %>
+                </select>
+            </div>
+        </div>
+        
+        <div class="field">
+            <label>특이사항</label>
+            <input type="text" name="pokemon_memo" value="<%=data.pokemon_memo%>">
+        </div>
+        <div class="buttons">
+        <button type="submit" class="ui button blue animated" id="addPokemon">
+            <div class="visible content">ADJUST</div>
+            <div class="hidden content">
+                <i class="right arrow icon"></i>
+            </div>
+        </button>
+        
+        <a href="/detail/<%=data.pokemon_idx%>" class="ui floated right gray button">돌아가기</a>
+        </div>
+            
+            
+        </form>
+    </form>
+    
+
+    <script>
+        // 각각의 dropdown에 대한 처리
+        // $('.ui.dropdown').dropdown({
+        //     action: 'select',
+        // });
+        $('select[name=pokemon_type]').dropdown('set selected', $('input[name=selected_department]').val());
+        $('select[name=pokemon_location]').dropdown('set selected', $('input[name=selected_position]').val());
+    </script>
+
+</body>
+</html>

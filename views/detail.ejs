@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지</title>
+    <script src="/jquery-3.6.0.min.js"></script>
+    <script src="/semantic.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/semantic.min.css">
+    <style>
+      body {
+        background: transparent;
+      }
+      span {
+        font-size: 1.2rem;
+        vertical-align: middle;
+      }
+      .container {
+          margin:20px auto;
+          padding:20px;
+          max-width:1200px;
+          position: relative;
+      }
+      .ui.grid.mb {
+        margin-bottom:4px;
+      }
+      .ui.button.right.floated.ml {
+        margin-left:10px;
+      }
+      .content.center {
+        text-align: center;
+      }
+      .ui.raised.segment {
+        background: rgba(255, 255, 255, 0.5);
+      }
+      .ui.header {
+        display: flex;
+        color: white;
+      }
+      .ui.image {
+        border-radius: 8px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 14px;
+        margin-right: 14px;
+      }
+      .field.ui.action { justify-self:flex-end;}
+      input[name=pokemon_image] { margin: 0 !important;} 
+      #trash-icon { margin-right: 4px;}
+    </style>
+</head>
+<body style="background-color : <%=data.type_color%>">
+  <%- include('./modal') %>
+  <div class="container">
+    <h2 class="ui header">
+      <i class="github icon"></i>
+      <div class="content">
+        <%=data.pokemon_name%>
+      </div>
+    </h2>
+    <div class="ui grid mb" data-number="<%=data.pokemon_idx%>">
+      <div class="column">
+        <div class="ui raised segment">
+          <a class="ui white ribbon label">등록 #</a>
+          <span>#<%=data.pokemon_idx%></span><br><br>
+          <a class="ui white ribbon label">포켓몬스터 이름</a>
+          <span><%=data.pokemon_name%></span><br><br>
+          <a class="ui white ribbon label" >포켓몬스터 타입</a>
+          <span><%=data.type_name%></span><br><br>
+          <a class="ui white ribbon label">발견된 도시</a>
+          <span><%=data.location_name%></span>
+          <% if (data.pokemon_memo) { %>     
+            <div class="ui icon message">
+              <i class="pencil alternate icon"></i>
+              <div class="content">
+                <div class="header">
+                  특이사항
+                </div>
+                <p><%=data.pokemon_memo%></p>
+              </div>
+            </div>
+            <% } %>
+            <img src="<%=data.pokemon_image%>" class="ui small image">
+        </div>
+      </div>
+    </div>
+    
+    <div class="ui form">
+      <div class="inline fields">
+        <div class="field floated left">
+          <a href="/detail/edit/form/<%=data.pokemon_idx%>" class="ui right floated icon green button ml">
+            <i class="edit icon"></i>
+          </a>
+          <button id="trash-icon" class="ui right floated icon red button">
+            <i class="trash alternate icon"></i>
+          </button>
+          <a href="/main" class="ui right floated button ml">목록으로</a>
+        </div>
+        <!-- 이미지 업로드 -->
+        <form method="post" action="/upload/<%=data.pokemon_idx%>" enctype="multipart/form-data" class="input">
+          <div class="ui left labeled input">
+            <label for="img" class="ui label" style="cursor: pointer;">
+              이미지 선택
+            </label>
+            <input class="ui primary button" type="submit" value="UPLOAD" style="cursor: pointer;">
+          </div>
+          <input type="file" id="img" style="display: none" name="pokemon_image" required>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="/script/detail.js"></script>
+</body>
+</html>

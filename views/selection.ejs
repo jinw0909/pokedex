@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>selection</title>
+        <script src="/jquery-3.6.0.min.js"></script>
+        <script src="/semantic.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/semantic.min.css">
+        <style>
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+                max-width: 1200px;
+            }
+        </style>
+    </head>
+    <body>
+        <%- include('./selection_modal') %>
+        <input type="hidden" name="page_type" value="<%=page_type%>">
+        <input type="hidden" name="selected_data">
+        <div class="container">
+            <h2 class="ui horizontal divider header">
+                <% if (page_type === 'type') { %>
+                타입관리
+                <% } else { %>
+                지역관리
+                <% } %>
+            </h2>
+            <div class="ui form warning">
+                <div class="field">
+
+                </div>
+            </div>
+            <h4 class="ui center aligned header">
+                <img src="/images/monsterball_black.png" alt="monsterball_black">
+            </h4>
+                <!-- 신규 등록 양식 -->
+                <div class="ui action input">
+                    <input type="text" name="name">
+                    <button class="ui button add black">신규  
+                        <% if (page_type === 'type') { %>
+                            타입
+                            <% } else { %>
+                            지역
+                            <% } %>
+                        추가하기</button>
+                  </div>
+                <!-- 돌아가기 -->
+                <a href="/main" class="ui right floated button ml">목록으로</a>
+
+                <table class="ui unstackable definition table">
+                <tbody>
+                    <% list.forEach(function(item){ %>
+                        <% if (page_type === 'type') { %>
+                        <tr data-number="<%=item.type_idx%>" data-type="<%=page_type%>">
+                            <td><%=item.type_name%></td>
+                            <td class="one wide column">
+                                <button class="ui icon red inverted button delete">
+                                    <i class="trash alternate icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <% } else { %>
+                        <tr data-number="<%=item.location_idx%>" data-type="<%=page_type%>">
+                            <td><%=item.location_name%></td>
+                            <td class="one wide column">
+                                <button class="ui icon red inverted button delete">
+                                    <i class="trash alternate icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <% } %>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <script src="/script/selection.js"></script>
+    </body>
+</html>

@@ -5,7 +5,7 @@ const settings = {
         port: '3306',
         user: 'root',
         password: 'worldcup1989',
-        database: 'pokemon'
+        database: 'pokedex'
     }
 };
 

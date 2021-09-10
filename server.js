@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 80;
 const router = require('./router.js');
 const multer = require('multer');
 
